@@ -1,26 +1,87 @@
 /* ENREGISTRER URL */
 const URL = "http://localhost:3000/api/cameras";
 
-/*RECUPERER LES PRODUITS DANS LA CONSOLE*/
+/*RECUPERER LES CAMERAS DEPUIS L'URL*/
 
 fetch(URL, {method: "GET"})
     .then(response => response.json())                               //convertit le resultat au format json
-    .then(cameras => {console.log(cameras);                          //converti le resultat sur la console   // création de l'article dans le div parent
+    .then(cameras => {console.log(cameras);                          //converti le resultat sur la console   
         cameras.forEach(camera =>{
             appearCamera(camera);
         });
       })
     .catch(err => console.log("Houston we have a problem", err));              //si erreur !
 
-/*AFFICHER LES PRODUITS*/
-function appearCamera(camera){                                      // création d'un article présentant un produit
-    const Article = document.createElement("article");              // création d'un article présentant un produit
-    Article.innerHTML += '<img class=img-article small src=${camera.img}><span><h3>${camera.name}</h3><p>${camera.price}</p></span><p class=description>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> <select class="select-lens" name="lens" id="choice-lens"></select><button>Ajouter</button>';
-    Article.classList.add("product-list");                          // ajout d'une classe 
 
-    document.getElementById("vintage-camera").appendChild(Article); // cibler la div parent de l'article
+/*CIBLER LES CONTENEURS*/
+function appearCamera(camera){                                     
+    
+    let Article = document.createElement("article")                 // créer une envloppe pour un produit
+    document.getElementById("vintage-camera").appendChild(Article)  // cibler la div parent de l'article
+    Article.classList.add("product-list")
+
+    let imgProduct = document.createElement("img")                  // inclure emplacement image produit
+    imgProduct.classList.add("img-article","small")                 // ajout d'une classe 
+    imgProduct.src = camera.imageUrl
+    
+    let content = document.createElement("span")                    // content name et price
+
+    let nameProduct = document.createElement("h3")                  // indiquer le "nom" du produit
+    nameProduct.textContent = camera.name
+
+    let priceProduct = document.createElement("p")                  // element prix
+    priceProduct.classList.add("price")
+    priceProduct.textContent = camera.price/100 + "€"               // prix d'une camera
+
+    let description = document.createElement("p")                   // description Lorem ...
+    description.textContent = camera.description
+
+    let Lens = document.createElement("input")                     // élément choix de lentilles
+    Lens.classList.add("select-lens")
+
+    let addCart = document.createElement("a")                       // lien ajouter au panier
+    addCart.classList.add("add-cart")
+    addCart.href = "#" + camera._id
+    addCart.textContent = "Ajouter"
+    
+
+    Article.appendChild(imgProduct)
+    Article.appendChild(content)
+    content.appendChild(nameProduct)
+    content.appendChild(priceProduct)
+    Article.appendChild(description)
+    Article.appendChild(Lens)
+    Article.appendChild(addCart)
 }
-      
 
+
+/*LIER LES PRODUITS AU PANIER*/ 
+/*1 selectionner l'ajout au panier*/ 
+let cart = document.querySelectorAll(".add-cart");
+
+/*2 créer l'action "ajouter au panier"*/ 
+for (let i = 0; i < cart.length; i++) {         /*préciser l'action "ajout"*/ 
+    cart[i].addEventListener('click', () => {   /*déclencheur click*/ 
+        console.log('added to cart');           /*appliquer le résultat dans console*/
+        cartNumbers(products[i]);            
+    })/*??n'affiche pas un produit en particulier dans la console ??*/
+}
+
+/*3 indiquer le nombre de produits ajouter au panier*/ 
+function cartNumbers(products) {
+    let productNumbers = localStorage.getItem('cartNumbers');      /*indiquer au localStorage l'ajout d'un produit*/
+    productNumbers  = parseInt(productNumbers);                    /*resultat du premier ajout*/
+
+    if( productNumbers ) {                                           /*indiquer au localStorage l'ajout d'autres produits*/
+        localStorage.setItem('cartNumbers', productNumbers + 1);
+        document.querySelector('.store span').textContent = productNumbers + 1;      /* afficher un ajout sur l'icone panier*/
+        }                                                                           /*résultat du autre ajout*/ 
+        else{
+            localStorage.setItem('cartNumbers', 1);                                 /*OU résultat sans ajout*/ 
+            document.querySelector('.store span').textContent = 1;
+
+        }
+        setItems(products);
+}
 
 
