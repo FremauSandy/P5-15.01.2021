@@ -4,13 +4,22 @@ const URL = "http://localhost:3000/api/cameras";
 /*RECUPERER LES CAMERAS DEPUIS L'URL*/
 
 fetch(URL, {method: "GET"})
-    .then(response => response.json())                               //convertit le resultat au format json
-    .then(cameras => {console.log(cameras);                          //converti le resultat sur la console   
+    .then(response => response.json())                      /*convertit le resultat au format json*/
+    .then(cameras => {console.log(cameras);                 /*converti le resultat sur la console*/  
         cameras.forEach(camera =>{
             appearCamera(camera);
         });
+        let cart = document.querySelectorAll(".add-cart"); /*Afin que les resultats de la promesse soient pris en compte*/ 
+        console.log(cart);                                 /*selection du <A> "Ajouter"*/ 
+
+        for (let i = 0; i < cart.length; i++) {            /*préciser l'action "ajout"*/   
+            cart[i].addEventListener('click', () => {      /*déclencheur click*/ 
+            console.log('added to cart');                  /*appliquer le résultat dans console*/
+            cartNumbers(products[i]);            
+        })
+}
       })
-    .catch(err => console.log("Houston we have a problem", err));              //si erreur !
+    .catch(err => console.log("Houston we have a problem", err)); /*si erreur !*/
 
 
 /*CIBLER LES CONTENEURS*/
@@ -54,20 +63,15 @@ function appearCamera(camera){
     Article.appendChild(addCart)
 }
 
+/*cibler products*/ 
 
-/*LIER LES PRODUITS AU PANIER*/ 
-/*1 selectionner l'ajout au panier*/ 
-let cart = document.querySelectorAll(".add-cart");
 
-/*2 créer l'action "ajouter au panier"*/ 
-for (let i = 0; i < cart.length; i++) {         /*préciser l'action "ajout"*/ 
-    cart[i].addEventListener('click', () => {   /*déclencheur click*/ 
-        console.log('added to cart');           /*appliquer le résultat dans console*/
-        cartNumbers(products[i]);            
-    })/*??n'affiche pas un produit en particulier dans la console ??*/
-}
+    //??? recuperer l'id ???//
+    //??? recreer le tableau ???//
+    //??? appliquer un constructor ???//
 
-/*3 indiquer le nombre de produits ajouter au panier*/ 
+
+/*indiquer le nombre de produits ajouter au panier*/ 
 function cartNumbers(products) {
     let productNumbers = localStorage.getItem('cartNumbers');      /*indiquer au localStorage l'ajout d'un produit*/
     productNumbers  = parseInt(productNumbers);                    /*resultat du premier ajout*/
@@ -83,5 +87,3 @@ function cartNumbers(products) {
         }
         setItems(products);
 }
-
-
