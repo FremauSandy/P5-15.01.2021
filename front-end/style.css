@@ -49,12 +49,12 @@ a:active{
 }
 .store{
     display: flex;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 .add-sign{
     position: relative;
-    left: 18px;
-    bottom: 6px;
+    right: 5px;
+    top: 10px;
     justify-content: center;
     width: 20px;
     height: 20px;
