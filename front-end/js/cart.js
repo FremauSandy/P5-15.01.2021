@@ -56,6 +56,10 @@ function appearCart(camera){
           priceProduct.textContent = camera.price/100 + "€"
           priceProduct.classList.add("select-price")
 
+    let description = document.createElement("p")                   // description du produit              
+        description.textContent = camera.description
+        description.classList.add("infos-article")
+
     let contentChoice = document.createElement("span")
         contentChoice.classList.add("select-lens-quantity")
 
@@ -74,12 +78,13 @@ function appearCart(camera){
 
     itemContent.appendChild(imgProduct)       //<img>
     itemContent.appendChild(contentProduct)   //<div>
-      contentProduct.appendChild(content)         //<span>
-        content.appendChild(nameProduct)        //<h3>
-        content.appendChild(priceProduct)       //<p>
-      contentProduct.appendChild(contentChoice)   //<span>
-        contentChoice.appendChild(quantity)     //<input>
-        contentChoice.appendChild(lens)         //<input>                           
+      contentProduct.appendChild(content)       //<span>
+        content.appendChild(nameProduct)          //<h3>
+        content.appendChild(priceProduct)         //<p>
+      contentProduct.appendChild(description)   //<p>
+      contentProduct.appendChild(contentChoice) //<span>
+        contentChoice.appendChild(quantity)       //<input>
+        contentChoice.appendChild(lens)           //<input>                           
 
   document.getElementById("cart-items").appendChild(itemContent)  // cibler la div parent de l'article
 }

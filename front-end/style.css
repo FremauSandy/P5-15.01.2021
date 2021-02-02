@@ -181,7 +181,10 @@ article>.img-article:hover{
     width: 100%;
 }
 .select-lens{
-    width: 50%;
+    width: 40%;
+}
+.select-quantity{
+    width: 10%;
 }
 /* total cart*/
 .price-cart{
