@@ -49,12 +49,12 @@ a:active{
 }
 .store{
     display: flex;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 .add-sign{
     position: relative;
-    left: 18px;
-    bottom: 6px;
+    right: 5px;
+    top: 10px;
     justify-content: center;
     width: 20px;
     height: 20px;
@@ -144,4 +144,54 @@ span{
 article>.img-article:hover{
     transition: ease-in 0.2s;
     filter: blur(0px);
+}
+/*div Cart*/
+.cart-main{
+    display: flex;
+    align-items: center;
+    margin: 50px 0 50px 0;
+}
+#cart-infos{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 90%;
+}
+.title-cart{
+    margin-bottom: 20px;
+}
+.cart{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+.item-content{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+}
+.select-img{
+    width: 300px;
+}
+.product-infos{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-left: 20px;
+    width: 100%;
+}
+.select-lens{
+    width: 50%;
+}
+/* total cart*/
+.price-cart{
+    width: 30%;
+    height: 100%;
+    background-color: black;
+    color: white;
+    padding-left: 20px;
+}
+.title-price{
+    padding: 10px;
+    border-left: 2px solid white;
 }
