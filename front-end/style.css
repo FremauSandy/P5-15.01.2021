@@ -80,6 +80,7 @@ footer{
 .camera{
     flex-direction: row;
     margin: 100px 0 100px 0;
+    width: 90%;
 }
 .text-product{
     width: 20%;

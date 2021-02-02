@@ -1,36 +1,21 @@
-// 1.recuperer le localstorage "panier" 
-// 2.recuperer les produits du panier avec methode Get utilisé dans product (id) boucle pour recuperer id
-// 3.afficher les produits du panier (for each)
-// 4. faire product.js
-
 /* ENREGISTRER URL */
 const apiUrl = "http://localhost:3000/api/cameras/";
 
-//cart = button html "ajouter"
 //appearCart = présentation des produits dans page cart
-//panier = produits dans localstorage
+//panier = tableau de produits dans localstorage
+//quantity = choix de quantité sur un produit
+//nbrItems = Valeur quantité d'un produit
 
 /*CIBLER LES PRODUITS SELECTIONNES DANS LOCALSTORAGE*/
 const panier = JSON.parse(localStorage.getItem('panier'));          // accéder au localstorage
 
 panier.forEach(id => {                                              // cibler les elements du panier
-  fetch(apiUrl + id, {method: "GET"})                                     
+  fetch(apiUrl + id, {method: "GET"})                               // pour chaque produit on appelle son url et son id                                    
     .then(response => response.json())                              
     .then(camera => {
-       appearCart(camera); 
+       appearCart(camera);                                          // applique une "presentation" des produits
       })
-
 }); 
-
-/*VERIFICATION DU CONTENU PANIER*/
-function manageCart() {
-  
-  if (localStorage.getItem("panier") === null || localStorage.getItem("panier") === "[]") {  // si le panier contient un produit
-    document.querySelector("#cart-infos").parentNode.hidden = true;                          // affiche le contenu
-  } else {
-    document.querySelector("#cart-infos").parentNode.hidden = false;                         // n'affiche pas le contenu
-  }
-}
 
 /*PRESENTATION DES PRODUITS SELECTIONNES DANS LE PANIER*/ 
 function appearCart(camera){
@@ -42,7 +27,7 @@ function appearCart(camera){
       imgProduct.src = camera.imageUrl
       imgProduct.classList.add("select-img")
 
-  let contentProduct = document.createElement('div')
+  let contentProduct = document.createElement('div')              // contient ttes les infos relatives au produit selectionné
       contentProduct.classList.add("product-infos")
 
     let content = document.createElement("span")                    // content name et price
@@ -60,7 +45,7 @@ function appearCart(camera){
         description.textContent = camera.description
         description.classList.add("infos-article")
 
-    let contentChoice = document.createElement("span")
+    let contentChoice = document.createElement("span")              // contante quantity et lens
         contentChoice.classList.add("select-lens-quantity")
 
       let lens = document.createElement("select")                     // choix de lentilles
@@ -71,8 +56,8 @@ function appearCart(camera){
         quantity.classList.add("select-quantity")
 
       for (let i = 0; i < 10 ; i++) {                                 // afficher une liste proposant une quantité pour un produit
-          const nbrItems = document.createElement("option")//
-              nbrItems.textContent = i + 1;
+          const nbrItems = document.createElement("option")           // ajoute des selecteurs = nombre de jumaux d'un produit
+              nbrItems.textContent = i + 1;                           // valeur ajoutée
           quantity.appendChild(nbrItems);
   }
 
@@ -88,5 +73,13 @@ function appearCart(camera){
 
   document.getElementById("cart-items").appendChild(itemContent)  // cibler la div parent de l'article
 }
+/*APPLIQUER LES LENTILLES D'UN PRODUIT*/
 
-// totaux
+/*APPLIQUER LA QUANTITE D'UN PRODUIT*/
+
+/*POUVOIR SUPPRIMER UN PRODUIT DU PANIER*/
+
+/*ETABLIR PRIX D'UN PRODUIT*/
+
+
+/*ETABLIR PRIX TOTAL*/

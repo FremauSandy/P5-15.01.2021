@@ -82,9 +82,3 @@ function addCart() {
         document.querySelector('.store span').textContent = 1;
     }
 }
-
-//travailler quantité dans add cart
-
-//2.adapter ajout panier (objets panier) [id,quantité,lens]=objet
-
-// plus tard lens
