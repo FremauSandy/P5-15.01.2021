@@ -50,4 +50,3 @@ function appearCamera(camera){
     link.appendChild(article)
     document.getElementById("vintage-camera").appendChild(link)   // cibler la div parent de l'article
 }
-
