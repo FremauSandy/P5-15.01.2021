@@ -72,7 +72,7 @@ function appearCart(camera) {
 	document.getElementById("cart-items").appendChild(itemContent); // cibler la div parent de l'article
 }
 
-/*BUTTON SUPPRIMER*/
+/*BUTTON SUPPRIMER
 function deleteButton(itemContent) {
 	let buttonRemove = document.createElement('button')
 	let content = document.createTextNode('Supprimer')
@@ -81,10 +81,10 @@ function deleteButton(itemContent) {
 		deleteArticle(product)
 	})
 itemContent.appendChild(buttonRemove)
-}
+}*/
 
 /*ACTION SUPPRESSION*/
-function removeArticle
+
 
 /*APPLIQUER LA QUANTITE D'UN PRODUIT*/
 

@@ -63,7 +63,6 @@ function appearCamera(camera) {
 	content.appendChild(nameProduct); // <h3>
 	content.appendChild(priceProduct); // <p>
 	article.appendChild(description); // <p>
-
 	article.appendChild(addCartButton); // <button>
 	document.getElementById("vintage-camera").appendChild(article); // div parent de l'article
 }
@@ -97,7 +96,6 @@ function addCart() {
 	const indexSelected = selectInput.selectedIndex;
 	const lensChoice = "recuperer value de l'option selected"
 
-	// chercher value selected value
 	const Item = {
 		id: idProduct,
 		lense: lensChoice,
