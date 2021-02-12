@@ -1,23 +1,26 @@
 /* ENREGISTRER URL */
 const apiUrl = "http://localhost:3000/api/cameras/";
-
-//appearCart = présentation des produits dans page cart
-//panier = tableau de produits dans localstorage
-//quantity = choix de quantité sur un produit
-//nbrItems = Valeur quantité d'un produit
-
+let tabCamera = [];// tableau vide
 /*CIBLER LES PRODUITS SELECTIONNES DANS LOCALSTORAGE*/
-const panier = JSON.parse(localStorage.getItem("panier")); // accéder au localstorage
+const listPurchase = JSON.parse(localStorage.getItem("listPurchase")); // accéder au localstorage
 
-panier.forEach(id => {
-	// cibler les elements du panier
-	fetch(apiUrl + id, { method: "GET" }) // pour chaque produit on appelle son url et son id
-		.then(response => response.json())
-		.then(camera => {
-			appearCart(camera); // applique une "presentation" des produits
-		});
+const promise1 = new Promise((resolve, reject) => {
+	listPurchase.forEach(item =>{
+		// cibler les elements du panier
+		fetch(apiUrl + item.id, { method: "GET" }) // pour chaque produit on appelle son url et son id
+			.then(response => response.json())
+			.then(camera => {
+				appearCart(camera); // applique une "presentation" des produits
+				tabCamera[camera._id]=camera;
+				// solution bis: faire total au fur et a mesure des ajouts foreach(boucle) et initialiser total
+			});
+	});
 });
-console.log(panier);
+// console.log(listPurchase);
+promise1.then((value) =>{
+	console.log(value, tabCamera);
+})
+
 
 /*PRESENTATION DES PRODUITS SELECTIONNES DANS LE PANIER*/
 function appearCart(camera) {
@@ -46,7 +49,7 @@ function appearCart(camera) {
 	description.textContent = camera.description;
 	description.classList.add("infos-article");
 
-	let contentChoice = document.createElement("span"); // contante quantity et lens
+	let contentChoice = document.createElement("span"); // constante quantity et lens
 	contentChoice.classList.add("select-lens-quantity");
 
 	/*QUANTITE DU PRODUIT*/
@@ -85,8 +88,6 @@ itemContent.appendChild(buttonRemove)
 
 /*ACTION SUPPRESSION*/
 
-
-/*APPLIQUER LA QUANTITE D'UN PRODUIT*/
 
 /*ETABLIR PRIX D'UN PRODUIT*/
 
