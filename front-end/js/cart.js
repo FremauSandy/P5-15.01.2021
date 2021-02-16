@@ -1,56 +1,52 @@
 /* ENREGISTRER URL */
 const apiUrl = "http://localhost:3000/api/cameras/";
-let tabCamera = [];// tableau vide
+
 /*CIBLER LES PRODUITS SELECTIONNES DANS LOCALSTORAGE*/
 const listPurchase = JSON.parse(localStorage.getItem("listPurchase")); // accéder au localstorage
 
-const promise1 = new Promise((resolve, reject) => {
-	listPurchase.forEach(item =>{
-		// cibler les elements du panier
-		fetch(apiUrl + item.id, { method: "GET" }) // pour chaque produit on appelle son url et son id
-			.then(response => response.json())
-			.then(camera => {
-				appearCart(camera); // applique une "presentation" des produits
-				tabCamera[camera._id]=camera;
-				// solution bis: faire total au fur et a mesure des ajouts foreach(boucle) et initialiser total
-			});
+listPurchase.forEach(item =>{
+	// cibler les elements du panier
+	fetch(apiUrl + item.id, { method: "GET" }) // pour chaque produit on appelle son url et son id
+		.then(response => response.json())
+		.then(camera => {
+			appearCart(camera); // applique une "presentation" des produits
+		});
+		console.log(listPurchase)
 	});
-});
-// console.log(listPurchase);
-promise1.then((value) =>{
-	console.log(value, tabCamera);
-})
-
 
 /*PRESENTATION DES PRODUITS SELECTIONNES DANS LE PANIER*/
 function appearCart(camera) {
+	// contenant
 	let itemContent = document.createElement("div"); // conteneur pour un produit
 	itemContent.classList.add("item-content");
-
-	let imgProduct = document.createElement("img"); // image produit
+	// image produit
+	let imgProduct = document.createElement("img"); 
 	imgProduct.src = camera.imageUrl;
 	imgProduct.classList.add("select-img");
-
-	let contentProduct = document.createElement("div"); // contient ttes les infos relatives au produit selectionné
+	// conteneur infos produit
+	let contentProduct = document.createElement("div");
 	contentProduct.classList.add("product-infos");
-
-	let content = document.createElement("span"); // content name et price
+	// conteneur name et price
+	let content = document.createElement("span"); 
 	content.classList.add("select-price-name");
-
-	let nameProduct = document.createElement("h3"); // nom du produit
+	// nom du produit
+	let nameProduct = document.createElement("h3"); 
 	nameProduct.textContent = camera.name;
 	nameProduct.classList.add("select-name");
-
-	let priceProduct = document.createElement("p"); // prix d'un produit
+	// prix d'un produit
+	let priceProduct = document.createElement("p"); 
 	priceProduct.textContent = camera.price / 100 + "€";
 	priceProduct.classList.add("select-price");
-
-	let description = document.createElement("p"); // description du produit
+	// description du produit
+	let description = document.createElement("p"); 
 	description.textContent = camera.description;
 	description.classList.add("infos-article");
-
-	let contentChoice = document.createElement("span"); // constante quantity et lens
+	// consteneur quantity et suppression
+	let contentChoice = document.createElement("span"); 
 	contentChoice.classList.add("select-lens-quantity");
+	// boutton supression
+	let btnRemove = document.createElement("button")// button suppression de produit
+	btnRemove.classList.add("remove");
 
 	/*QUANTITE DU PRODUIT*/
 	const quantity = document.createElement("select"); //création d'un input select
@@ -62,7 +58,6 @@ function appearCart(camera) {
 		nbrItems.textContent = i + 1; // valeur ajoutée
 		quantity.appendChild(nbrItems);
 	}
-
 	itemContent.appendChild(imgProduct); //<img>
 	itemContent.appendChild(contentProduct); //<div>
 	contentProduct.appendChild(content); //<span>
@@ -71,24 +66,28 @@ function appearCart(camera) {
 	contentProduct.appendChild(description); //<p>
 	contentProduct.appendChild(contentChoice); //<span>
 	contentChoice.appendChild(quantity); //<input>
+	contentChoice.appendChild(btnRemove); //<button>
 
 	document.getElementById("cart-items").appendChild(itemContent); // cibler la div parent de l'article
 }
 
-/*BUTTON SUPPRIMER
-function deleteButton(itemContent) {
-	let buttonRemove = document.createElement('button')
-	let content = document.createTextNode('Supprimer')
+/*ACTION SUPPRESSION UNITE*/
+async function removeProduct(){
+	await appearCart(camera)
+	let buttonsRemove = document.getElementsByClassName("remove");
+	
 
-	buttonRemove.addEventListener('click', function(){
-		deleteArticle(product)
-	})
-itemContent.appendChild(buttonRemove)
-}*/
+}
+/*ACTION SUPPRESSION FULLCART*/
+// function deleteFullCart(){
+// 	listProduct = localStorage.getItem("listPurchase");
+// 	let fullDeleteButton = document.getElementsByClassName('full-delete');
+// 	fullDeleteButton.addEventListener("click", () => {
+// 		localStorage.clear();
+// 		alert('Votre panier à été vidé!')
+// 	})
+// }
 
-/*ACTION SUPPRESSION*/
+/*MODIFIER LES QUANTITES*/
 
-
-/*ETABLIR PRIX D'UN PRODUIT*/
-
-/*ETABLIR PRIX TOTAL*/
+/*APPLIQUER TOTAL PRIX*/

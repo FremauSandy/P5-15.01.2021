@@ -27,9 +27,6 @@
             
         </nav>
         
-        <a href="cart.html" class="store"><i class="fas fa-shopping-cart fa-lg"></i>
-            <span class=add-sign>0</span>
-        </a>
     </header>
 
     <main class="cart-main">
@@ -40,8 +37,38 @@
             </div>    
             <div class="price-cart">
                 <h2 class="title-price">Total</h2>
+                <div class="full-cart">
                 <!--Javascript--> 
+                <button class="full-delete">Supprimer le Panier</button>
+                </div>
             </div>
+            
+        </div>
+        <div class="form-container">
+            <h3>Valider votre commande</h3>
+            <form action="chack-cart">
+                <h4>Adresse</h4>
+                <div class="form-group">
+                    <label for="fullname"><i class="fas fa-user-alt"></i>Nom et Prénom</i></label>
+                    <input type="text" id="fullname" placeholder="John M. Doe">
+                
+                
+                    <label for="email"><i class="fa fa-envelope"></i>Email</label>
+                    <input type="text" id="email" placeholder="john@example.com">
+                
+                
+                    <label for="adresse"><i class="fas fa-home"></i>Adresse</label>
+                    <input type="text" id="adresse" placeholder="5 Rue des Champs Elysées">
+
+                    <label for="zip"><i class="fas fa-search-location"></i>Code Postal</label>
+                    <input type="text" id="zip" placeholder="75000">
+                
+                
+                    <label for="city"><i class="fa fa-city"></i>Ville</label>
+                    <input type="text" id="ville" placeholder="Paris">
+                </div>
+                <a id="submitPayment" class="check-form" type="submit">Envoyer</a>
+            </form>
         </div>
     </main>
 
@@ -54,4 +81,5 @@
 </body>
 <!--Code Javascript-->
 <script type="text/javascript" src="js/cart.js"></script>
+<script type="text/javascript" src="js/form.js"></script>
 </html>

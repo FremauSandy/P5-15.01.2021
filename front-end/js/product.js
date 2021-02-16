@@ -120,3 +120,5 @@ function addCart() {
 	}
 	console.log(listPurchase)
 }
+
+// regler span header quand il y a deja des articles dans localstorage

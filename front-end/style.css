@@ -198,9 +198,17 @@ span{
 .select-quantity{
     width: 10%;
 }
+.full-delete{
+    width: 200px;
+    height: 30px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
 /* total cart*/
 .price-cart{
-    width: 30%;
     height: 100%;
     background-color: black;
     color: white;
@@ -209,4 +217,72 @@ span{
 .title-price{
     padding: 10px;
     border-left: 2px solid white;
+}
+.remove{
+    width: 20%;
+    height: 30px;
+    background-color: black;
+    color: white;
+
+}
+.remove:hover{
+    background-color: white;
+    color: black;
+
+}
+@media screen and (max-width: 800px){
+    #cart-infos{
+        margin: 0;
+    }
+    .cart{
+        width: 100%;
+    }
+    .select-quantity{
+        width: 20%;
+    }
+}
+.form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    width: 90%;
+    border: 2px solid black;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    background-color: lightgrey;
+    width: 80%;
+    margin-bottom: 20px;
+}
+.form-group{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+label{
+    margin-bottom: 6px;
+
+}
+.fa{
+    margin-right: 20px;
+}
+input{
+    border: transparent;
+    height: 30px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.check-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 60px;
+    background-color: black;
+    margin: 20px;
 }
