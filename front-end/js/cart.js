@@ -2,60 +2,82 @@
 const apiUrl = "http://localhost:3000/api/cameras/";
 
 /*CIBLER LES PRODUITS SELECTIONNES DANS LOCALSTORAGE*/
-const listPurchase = JSON.parse(localStorage.getItem("listPurchase")); // accéder au localstorage
+const listPurchase = JSON.parse(localStorage.getItem("listPurchase"));
 
-listPurchase.forEach(item =>{
-	// cibler les elements du panier
-	fetch(apiUrl + item.id, { method: "GET" }) // pour chaque produit on appelle son url et son id
+if (localStorage.getItem("listPurchase") === null) {
+	// si le localStorage possede au moins un element
+	alert("Votre panier est vide!");
+}
+
+listPurchase.forEach(item => {
+	fetch(apiUrl + item.id, { method: "GET" })
 		.then(response => response.json())
 		.then(camera => {
-			appearCart(camera); // applique une "presentation" des produits
+			appearCart(camera);
 		});
-		console.log(listPurchase)
-	});
+	console.log(listPurchase);
+});
 
 /*PRESENTATION DES PRODUITS SELECTIONNES DANS LE PANIER*/
 function appearCart(camera) {
-	// contenant
 	let itemContent = document.createElement("div"); // conteneur pour un produit
 	itemContent.classList.add("item-content");
-	// image produit
-	let imgProduct = document.createElement("img"); 
+
+	let imgProduct = document.createElement("img");
 	imgProduct.src = camera.imageUrl;
 	imgProduct.classList.add("select-img");
-	// conteneur infos produit
+
 	let contentProduct = document.createElement("div");
 	contentProduct.classList.add("product-infos");
-	// conteneur name et price
-	let content = document.createElement("span"); 
+
+	let content = document.createElement("span");
 	content.classList.add("select-price-name");
-	// nom du produit
-	let nameProduct = document.createElement("h3"); 
+
+	let nameProduct = document.createElement("h3");
 	nameProduct.textContent = camera.name;
 	nameProduct.classList.add("select-name");
-	// prix d'un produit
-	let priceProduct = document.createElement("p"); 
+
+	let priceProduct = document.createElement("p");
 	priceProduct.textContent = camera.price / 100 + "€";
 	priceProduct.classList.add("select-price");
-	// description du produit
-	let description = document.createElement("p"); 
+
+	let description = document.createElement("p");
 	description.textContent = camera.description;
 	description.classList.add("infos-article");
-	// consteneur quantity et suppression
-	let contentChoice = document.createElement("span"); 
+
+	let contentChoice = document.createElement("span");
 	contentChoice.classList.add("select-lens-quantity");
-	// boutton supression
-	let btnRemove = document.createElement("button")// button suppression de produit
+
+	let btnRemove = document.createElement("button");
 	btnRemove.classList.add("remove");
+	btnRemove.textContent = "Supprimer";
+
+	/*ACTION SUPPRESSION UNITE*/
+	// btnRemove.onclick = function (e) {
+	// 	//en cliquant sur le button
+	// 	let parentTarget = e.target.parentNode.parentNode.parentNode; // container parent
+	// 	//let productid = parentTarget.getAtrribute(/*.id*/); // attribut id a trouver!
+	// 	let listPurchase; // appel du tableau de produits selectionnés
+	// 	for (let i = 0; i < listPurchase.length; i++) {
+	// 		// pour chaque button remove
+	// 		if (productId === listPurchase[i]._id) {
+	// 			// si l'id du produit a supprimé est égal a l'id enregistré dans le tab
+	// 			listPurchase = i;
+	// 		}
+	// 	}
+	// 	listPurchase.splice(listPurchase, 1); //supprime un élément du tableau
+	// 	localStorage.setItem("listPurchase", JSON.stringify(listPurchase));
+	// 	window.location.reload(true);
+	// };
 
 	/*QUANTITE DU PRODUIT*/
-	const quantity = document.createElement("select"); //création d'un input select
+	const quantity = document.createElement("select");
 	quantity.classList.add("select-quantity");
 
 	for (let i = 0; i < 10; i++) {
 		// afficher une liste proposant une quantité pour un produit
-		const nbrItems = document.createElement("option"); // ajoute des selecteurs = nombre de jumaux d'un produit
-		nbrItems.textContent = i + 1; // valeur ajoutée
+		const nbrItems = document.createElement("option");
+		nbrItems.textContent = i + 1;
 		quantity.appendChild(nbrItems);
 	}
 	itemContent.appendChild(imgProduct); //<img>
@@ -68,25 +90,21 @@ function appearCart(camera) {
 	contentChoice.appendChild(quantity); //<input>
 	contentChoice.appendChild(btnRemove); //<button>
 
-	document.getElementById("cart-items").appendChild(itemContent); // cibler la div parent de l'article
+	document.getElementById("cart-items").appendChild(itemContent);
 }
 
-/*ACTION SUPPRESSION UNITE*/
-async function removeProduct(){
-	await appearCart(camera)
-	let buttonsRemove = document.getElementsByClassName("remove");
-	
-
-}
 /*ACTION SUPPRESSION FULLCART*/
-// function deleteFullCart(){
-// 	listProduct = localStorage.getItem("listPurchase");
-// 	let fullDeleteButton = document.getElementsByClassName('full-delete');
-// 	fullDeleteButton.addEventListener("click", () => {
-// 		localStorage.clear();
-// 		alert('Votre panier à été vidé!')
-// 	})
-// }
+
+let fullDeleteButton = document
+	.getElementById("full-delete")
+	.addEventListener("click", function () {
+		if (confirm("Etes-vous sûr de vouloir vider votre panier?")) {
+			localStorage.clear();
+			location.reload();
+		} else {
+			alert("Votre panier est déjà vide!");
+		}
+	});
 
 /*MODIFIER LES QUANTITES*/
 

@@ -1,29 +1,29 @@
-/* ENREGISTRER URL */
+/*ENREGISTRER URL*/
 const apiUrl = "http://localhost:3000/api/cameras/";
 
-/*--------------------------------------RECUPERER L'ID ET URL D'UN PRODUIT -----------------------------------------*/
+/*RECUPERER L'ID ET URL D'UN PRODUIT*/
 const parsedUrl = new URL(window.location.href); //créer un objet url a partir d'un "string"
-const idProduct = parsedUrl.searchParams.get("id"); // indique un Id précis en fonction du produit selectionné
+const idProduct = parsedUrl.searchParams.get("id");
+const imgProduct = parsedUrl.searchParams.get("imageUrl");
+const priceProduct = parsedUrl.searchParams.get("price");
 
-/*-------------------------------APPLIQUER L'APPARITION D'UN PRODUIT SELECTIONNE---------------------------------------*/
-fetch(apiUrl + idProduct, { method: "GET" }) // préciser et l'id selectionnée page index
-	.then(response => response.json()) // convertit le resultat au format json
+/*APPLIQUER L'APPARITION D'UN PRODUIT SELECTIONNE*/
+fetch(apiUrl + idProduct, { method: "GET" })
+	.then(response => response.json())
 	.then(camera => {
-		console.log(camera); // indique le resultat sur la console
-		appearCamera(camera); // précise la présentation du produit selectionné
+		console.log(camera);
+		appearCamera(camera);
 		appearOption(camera);
 
-		let cart = document.querySelector("#add-cart"); // Afin que les resultats de la promesse soient pris en compte
-		console.log(cart); //afficher le resultat dans la console
+		let cart = document.querySelector("#add-cart");
+		console.log(cart);
 		cart.addEventListener("click", () => {
-			// déclencheur click
-			addCart(); // action ajout au panier
+			addCart();
 		});
 	})
+	.catch(err => console.log("HOUSTON !! we have a problem", err));
 
-	.catch(err => console.log("HOUSTON !! we have a problem", err)); // si erreur !
-
-/*--------------------------------------PRESENTATION PRODUIT SELECTIONNE----------------------------------*/
+/*PRESENTATION PRODUIT SELECTIONNE*/
 function appearCamera(camera) {
 	let article = document.createElement("article");
 	article.classList.add("product-list");
@@ -47,8 +47,8 @@ function appearCamera(camera) {
 	description.textContent = camera.description;
 	description.classList.add("infos-article");
 
-	let addCartButton = document.createElement("button"); // ajout button pour le panier
-	addCartButton.id = "add-cart"; // ajout d'un id au button
+	let addCartButton = document.createElement("button");
+	addCartButton.id = "add-cart";
 	addCartButton.textContent = "Ajouter";
 
 	article.appendChild(imgProduct); // <article>
@@ -57,68 +57,65 @@ function appearCamera(camera) {
 	content.appendChild(priceProduct); // <p>
 	article.appendChild(description); // <p>
 	article.appendChild(addCartButton); // <button>
-	document.getElementById("vintage-camera").appendChild(article); // div parent de l'article
+	document.getElementById("vintage-camera").appendChild(article);
 }
 
-/*--------------------------------------CHOIX DE LENTILLES------------------------------------------*/
+/*CHOIX DE LENTILLES*/
 function appearOption(camera) {
-	let lens = document.createElement("select"); // input choix de lentilles
+	let lens = document.createElement("select");
 	lens.classList.add("select-lens");
 
 	for (let i = 0; i < camera.lenses.length; i++) {
-		// cibler le tableau lenses dans camera
-		let optionLens = document.createElement("option"); //option input proposant les lentilles associés au produit selectionné
+		let optionLens = document.createElement("option");
 		optionLens.setAttribute("value", camera.lenses[i]);
 		optionLens.textContent = camera.lenses[i];
 		lens.appendChild(optionLens);
 	}
 
 	lens.addEventListener("Selectionner votre lentille", e => {
-		// ajout d'un evenement sur l'input
 		const lensChoice = document.getElementsByClassName("select-lens").value;
-		localStorage.setItem("lens", lensChoice); // récupération du choix de l'objectif dans le localstorage
+		localStorage.setItem("lens", lensChoice);
 	});
-	// cibler button et ajouter input "lens"
-	document.getElementById('add-cart').before(lens);
+	document.getElementById("add-cart").before(lens);
 }
-
-/*-----------------------------MANIPULER LE LOCALSTORAGE----------------------*/
 
 /*INDIQUER L'AJOUT AU PANIER/LOCALSTORAGE*/
 function addCart() {
-	let listPurchase = localStorage.getItem("listPurchase"); //on recupere le local storage
-	
-	const Item = {
+	let listPurchase = localStorage.getItem("listPurchase");
+
+	const itemToAdd = {
 		id: idProduct,
-		quantity: 1
-	}
+		image: imgProduct,
+		quantity: 1,
+		price: priceProduct
+	};
 
 	if (listPurchase) {
-		//si localStorage existe (contient quelque chose)
-		const tabResult = JSON.parse(listPurchase); // transforme en tableau
-		let itemExist = false; // valeur par defaut
-		tabResult.forEach(item => {// acces aux elements (boucle)
+		const tabResult = JSON.parse(listPurchase);
+		let itemExist = false;
+		tabResult.forEach(item => {
+			// acces aux elements (boucle)
 
-			if (item.id === idProduct) {// si le produit existe deja dans le localstorage, on augmente uniquement sa quantité
-				item.quantity = parseInt(item.quantity) + 1;// incrémenter la quantité d'un produit deja présent
+			if (item.id === itemToAdd.id) {
+				// si le produit existe deja dans le localstorage, on augmente uniquement sa quantité
+
+				item.quantity = parseInt(item.quantity) + 1; // incrémenter sa quantité
 				itemExist = true;
 			}
 		});
 
-		if(!itemExist){
-			tabResult.push(Item); // push dans tableau products[id]
+		if (!itemExist) {
+			tabResult.push(itemToAdd);
 		}
-		const nbProducts = tabResult.length; // indique le nbr d'objets contenu dans le tableau header
-			document.querySelector(".store span").textContent = nbProducts; // afficher un ajout sur l'icone panier header
-		//produit existant ou non dans le panier = mise a jour du localstorage
-		localStorage.setItem("listPurchase", JSON.stringify(tabResult)); // on met a jour le localstorage
-
+		const nbProducts = tabResult.length;
+		document.querySelector(".store span").textContent = nbProducts; //indique nbr de produits induits
+		localStorage.setItem("listPurchase", JSON.stringify(tabResult));
 	} else {
-		// si le panier n'existe pas
-		localStorage.setItem("listPurchase", JSON.stringify([Item])); // on crée le panier
-		document.querySelector(".store span").textContent = 1; //indication dans header
+		localStorage.setItem("listPurchase", JSON.stringify([itemToAdd]));
+		document.querySelector(".store span").textContent = 1;
 	}
-	console.log(listPurchase)
+	console.log(listPurchase);
 }
 
 // regler span header quand il y a deja des articles dans localstorage
+// regler quantité
