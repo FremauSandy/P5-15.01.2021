@@ -25,10 +25,10 @@
             </div>    
             <div class="price-cart">
                 <h2 class="title-price">Total</h2>
-                <div class="full-cart">
-                <!--Javascript--> 
-                <button id="full-delete">Supprimer le Panier</button>
+                <div id="full-cart">
+                    <!--Javascript--> 
                 </div>
+                <button id="full-delete">Supprimer le Panier</button>
             </div>
             
         </div>
@@ -37,25 +37,37 @@
             <form action="chack-cart">
                 <h4>Adresse</h4>
                 <div class="form-group">
-                    <label for="fullname"><i class="fas fa-user-alt"></i>Nom et Prénom</i></label>
-                    <input type="text" id="fullname" placeholder="John M. Doe">
-                
+                    <label for="firstname"><i class="fas fa-user-alt"></i>Prénom</i></label>
+                    <input type="text" id="firstname" placeholder="John">
+                    <span id="alert-firstname"></span>
+
+                    <label for="lastname"><i class="fas fa-user-alt"></i>Nom</i></label>
+                    <input type="text" id="lastname" placeholder="Doe">
+                    <span id="alert-lastname"></span>
                 
                     <label for="email"><i class="fa fa-envelope"></i>Email</label>
                     <input type="text" id="email" placeholder="john@example.com">
-                
+                    <span id="alert-email"></span>
                 
                     <label for="adresse"><i class="fas fa-home"></i>Adresse</label>
                     <input type="text" id="adresse" placeholder="5 Rue des Champs Elysées">
+                    <span id="alert-adresse"></span>
 
                     <label for="zip"><i class="fas fa-search-location"></i>Code Postal</label>
                     <input type="text" id="zip" placeholder="75000">
+                    <span id="alert-zip"></span>
                 
-                
+
                     <label for="city"><i class="fa fa-city"></i>Ville</label>
-                    <input type="text" id="ville" placeholder="Paris">
+                    <input type="text" id="city" placeholder="Paris">
+                    <span id="alert-city"></span>
+
                 </div>
-                <a id="submitPayment" class="check-form" type="submit">Envoyer</a>
+                
+               <a href="confirm.html"> 
+                   <button id="submit-order" class="check-form">Commander</button>
+                </a>
+
             </form>
         </div>
     </main>
@@ -69,5 +81,4 @@
 </body>
 <!--Code Javascript-->
 <script type="text/javascript" src="js/cart.js"></script>
-<script type="text/javascript" src="js/form.js"></script>
 </html>

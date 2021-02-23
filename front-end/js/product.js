@@ -4,21 +4,17 @@ const apiUrl = "http://localhost:3000/api/cameras/";
 /*RECUPERER L'ID ET URL D'UN PRODUIT*/
 const parsedUrl = new URL(window.location.href); //créer un objet url a partir d'un "string"
 const idProduct = parsedUrl.searchParams.get("id");
-const imgProduct = parsedUrl.searchParams.get("imageUrl");
-const priceProduct = parsedUrl.searchParams.get("price");
 
 /*APPLIQUER L'APPARITION D'UN PRODUIT SELECTIONNE*/
 fetch(apiUrl + idProduct, { method: "GET" })
 	.then(response => response.json())
 	.then(camera => {
-		console.log(camera);
 		appearCamera(camera);
 		appearOption(camera);
 
 		let cart = document.querySelector("#add-cart");
-		console.log(cart);
 		cart.addEventListener("click", () => {
-			addCart();
+			addCart(camera);
 		});
 	})
 	.catch(err => console.log("HOUSTON !! we have a problem", err));
@@ -72,7 +68,7 @@ function appearOption(camera) {
 		lens.appendChild(optionLens);
 	}
 
-	lens.addEventListener("Selectionner votre lentille", e => {
+	lens.addEventListener("change", e => {
 		const lensChoice = document.getElementsByClassName("select-lens").value;
 		localStorage.setItem("lens", lensChoice);
 	});
@@ -80,42 +76,39 @@ function appearOption(camera) {
 }
 
 /*INDIQUER L'AJOUT AU PANIER/LOCALSTORAGE*/
-function addCart() {
+function addCart(camera) {
 	let listPurchase = localStorage.getItem("listPurchase");
 
 	const itemToAdd = {
 		id: idProduct,
-		image: imgProduct,
+		name: camera.name,
+		image: camera.imageUrl,
 		quantity: 1,
-		price: priceProduct
+		price: camera.price
 	};
 
 	if (listPurchase) {
+		//si LS existe
 		const tabResult = JSON.parse(listPurchase);
 		let itemExist = false;
+
 		tabResult.forEach(item => {
 			// acces aux elements (boucle)
 
 			if (item.id === itemToAdd.id) {
-				// si le produit existe deja dans le localstorage, on augmente uniquement sa quantité
-
+				// si le produit existe
 				item.quantity = parseInt(item.quantity) + 1; // incrémenter sa quantité
 				itemExist = true;
 			}
 		});
 
 		if (!itemExist) {
+			// si le produit n'existe pas
 			tabResult.push(itemToAdd);
 		}
-		const nbProducts = tabResult.length;
-		document.querySelector(".store span").textContent = nbProducts; //indique nbr de produits induits
-		localStorage.setItem("listPurchase", JSON.stringify(tabResult));
+		localStorage.setItem("listPurchase", JSON.stringify(tabResult)); // mise a jour LS
 	} else {
+		// si LS n'existe pas
 		localStorage.setItem("listPurchase", JSON.stringify([itemToAdd]));
-		document.querySelector(".store span").textContent = 1;
 	}
-	console.log(listPurchase);
 }
-
-// regler span header quand il y a deja des articles dans localstorage
-// regler quantité
