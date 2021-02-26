@@ -15,7 +15,7 @@ body {
 	margin: 0;
 	font-family: "Roboto", sans-serif;
 }
-/*En-tête*/
+/*--------------------------En-tête------------------------------*/
 header {
 	height: 60px;
 	color: white;
@@ -54,7 +54,7 @@ a {
 main {
 	flex-direction: column;
 }
-/*footer*/
+/*-----------------------footer-----------------------------*/
 footer {
 	flex-direction: row;
 	justify-content: space-around;
@@ -73,7 +73,7 @@ footer {
 	}
 }
 
-/*page Products*/
+/*----------------------page Products---------------------------*/
 .camera {
 	display: flex;
 	flex-direction: column;
@@ -145,7 +145,7 @@ span {
 	height: 200px;
 }
 
-/*page Cart*/
+/*------------------------page Cart----------------------------*/
 .cart-main {
 	display: flex;
 	align-items: center;
@@ -208,7 +208,7 @@ span {
 	align-items: center;
 	margin-bottom: 40px;
 }
-/* total cart*/
+/* ----------------------------total cart-------------------------*/
 .price-cart {
 	background-color: black;
 	color: white;
@@ -304,4 +304,15 @@ input {
 	background-color: white;
 	color: black;
 	border: 2px solid black;
+}
+/* ---------------------------page order-------------------------*/
+.text-annex {
+	text-align: center;
+}
+.number-order {
+	text-align: center;
+	width: 100%;
+	padding: 20px;
+	background-color: black;
+	color: white;
 }

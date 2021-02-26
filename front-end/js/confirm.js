@@ -1,5 +1,17 @@
-// function getId() {
-// 	const param = window.location.search;
-// 	const id = param.replace("?OrderId=", ""); //récup uniquement de l'id
-// 	return id;
-// }
+function getId() {
+	const param = window.location.search;
+	const id = param.replace("?camera_id=", "");
+	return id;
+}
+function finalOrder() {
+	let mainContent = document.getElementById("final-order");
+
+	let numberOrder = document.createElement("p");
+	numberOrder.classList.add("number-order");
+	numberOrder.textContent = "N° de votre commande :" + getId();
+
+	mainContent.appendChild(numberOrder);
+
+	localStorage.clear();
+}
+finalOrder();

@@ -141,6 +141,24 @@ function totalCart() {
 	return totalCount;
 }
 
+/*FORM TO API*/
+const toApi = async function (data) {
+	let reponse = await fetch("http://localhost:3000/api/cameras/order", {
+		method: "POST",
+		body: data,
+		headers: {
+			"Content-type": "application/json"
+		}
+	});
+
+	if (reponse.ok) {
+		let infos = await reponse.json();
+		window.location = "order.html?OrderId=" + infos.orderId;
+	} else {
+		alert("erreur: : " + reponse.status);
+	}
+};
+
 /*ENVOI FORMULAIRE*/
 function sendOrder() {
 	//lier inputs html
@@ -222,6 +240,7 @@ function sendOrder() {
 	};
 
 	let camera_id = []; //tableau orders
+
 	let orderCart = JSON.parse(localStorage.getItem("listPurchase"));
 	for (let item of orderCart) {
 		camera_id.push(item._id);
@@ -234,28 +253,12 @@ function sendOrder() {
 	};
 
 	if (formValid) {
-		sendApi(JSON.stringify(order)).then(data => {
+		toApi(JSON.stringify(order)).then(data => {
 			console.log(data);
 		});
 	}
-
-	products = selectedProduct;
-	//*form to api
-	fetch("http://localhost:3000/api/cameras/order", {
-		method: "post",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({
-			contact: plugContact,
-			products: products
-		})
-	})
-		.then(response => response.json())
-		.then(order => {
-			localStorage.setItem("orderId", order.orderId);
-			window.location.href = "order.html";
-		})
-		.catch(error => alert("Votre formulaire n'est pas correct !"));
 }
-
 /*ENVOYER COMMANDE*/
-document.getElementById("submit-order").addEventListener("click", sendOrder);
+document.getElementById("submit-order").addEventListener("click", function (event) {
+	sendOrder();
+});
