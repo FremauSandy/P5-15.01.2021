@@ -1,14 +1,14 @@
 /*CIBLER LES PRODUITS SELECTIONNES DANS LOCALSTORAGE*/
 const listPurchase = JSON.parse(localStorage.getItem("listPurchase"));
 
-if (localStorage.getItem("listPurchase") === null) {
-	// si le localStorage possede au moins un element
+if (!localStorage.getItem("listPurchase")) {
 	alert("Votre panier est vide!");
 }
 
 if (listPurchase) {
 	listPurchase.forEach(item => {
 		appearCart(item);
+		totalCart();
 	});
 }
 
@@ -38,13 +38,14 @@ function appearCart(item) {
 	contentChoice.classList.add("select-lens-quantity");
 
 	let totalProduct = document.createElement("p");
-	totalProduct.textContent = "=" + "..." + "€";
+	totalProduct.textContent = "=" + (item.price / 100) * item.quantity + "€";
 
 	/*ACTION SUPPRESSION UNITE*/
 	let btnRemove = document.createElement("button");
 	btnRemove.classList.add("remove");
 	btnRemove.textContent = "Supprimer";
 	btnRemove.onclick = function (e) {
+		// addeventlistener !
 		let buttonClicked = e.target;
 		buttonClicked.parentElement.parentElement.parentElement.remove();
 		removeItemFromCart(item.id);
@@ -67,9 +68,8 @@ function appearCart(item) {
 	quantity.addEventListener("change", e => {
 		const quantityChoice = document.getElementById("select-quantity" + item.id).value;
 		item.quantity = quantityChoice;
+		location.reload();
 		saveCart();
-		// refrech totalproduct ??
-		totalCart();
 	});
 
 	itemContent.appendChild(imgProduct); //<img>
@@ -107,26 +107,26 @@ function removeItemFromCart(id) {
 		}
 	}
 	saveCart();
-	totalCart();
 }
 
 /*SAVE CART*/
 function saveCart() {
 	localStorage.setItem("listPurchase", JSON.stringify(listPurchase));
-	// mettre a jour total
 	totalCart();
 }
 
 /*APPLIQUER TOTAL PRIX SUR UN SEUL PRODUIT*/
 function countProduct() {
+	const listPurchase = JSON.parse(localStorage.getItem("listPurchase"));
 	let totalCount = 0;
 	for (let i in listPurchase) {
 		totalCount += listPurchase[i].count * listPurchase[i].price;
+
+		//total prix produit par sa quantité html
+		let priceProd = document.getElementsByClassName("select-price");
 	}
 	return totalCount;
 }
-
-console.log(countProduct());
 
 /*APPLIQUER TOTAL COMMANDE*/
 function totalCart() {
@@ -136,13 +136,10 @@ function totalCart() {
 
 		//total de la commande html
 		let fullCart = document.getElementById("full-cart");
-		fullCart.innerText = totalCount + " €";
+		fullCart.innerText = totalCount / 100 + " €";
 	}
 	return totalCount;
 }
-
-console.log(listPurchase);
-console.log(totalCart());
 
 /*ENVOI FORMULAIRE*/
 function sendOrder() {
@@ -226,7 +223,7 @@ function sendOrder() {
 
 	let camera_id = []; //tableau orders
 	let orderCart = JSON.parse(localStorage.getItem("listPurchase"));
-	for (let item of ordercCart) {
+	for (let item of orderCart) {
 		camera_id.push(item._id);
 	}
 
@@ -242,6 +239,7 @@ function sendOrder() {
 		});
 	}
 
+	products = selectedProduct;
 	//*form to api
 	fetch("http://localhost:3000/api/cameras/order", {
 		method: "post",

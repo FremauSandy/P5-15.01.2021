@@ -231,6 +231,8 @@ span {
 }
 #full-cart {
 	margin-bottom: 20px;
+	font-weight: bold;
+	font-size: 18px;
 }
 .remove {
 	width: 80px;

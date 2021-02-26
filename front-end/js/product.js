@@ -12,9 +12,9 @@ fetch(apiUrl + idProduct, { method: "GET" })
 		appearCamera(camera);
 		appearOption(camera);
 
-		let cart = document.querySelector("#add-cart");
+		let cart = document.querySelector("#add-cart"); // autre nom + html
 		cart.addEventListener("click", () => {
-			addCart(camera);
+			addProduct(camera);
 		});
 	})
 	.catch(err => console.log("HOUSTON !! we have a problem", err));
@@ -67,17 +67,12 @@ function appearOption(camera) {
 		optionLens.textContent = camera.lenses[i];
 		lens.appendChild(optionLens);
 	}
-
-	lens.addEventListener("change", e => {
-		const lensChoice = document.getElementsByClassName("select-lens").value;
-		localStorage.setItem("lens", lensChoice);
-	});
-	document.getElementById("add-cart").before(lens);
 }
 
 /*INDIQUER L'AJOUT AU PANIER/LOCALSTORAGE*/
-function addCart(camera) {
-	let listPurchase = localStorage.getItem("listPurchase");
+function addProduct(camera) {
+	// rennomer product
+	let listPurchase = JSON.parse(localStorage.getItem("listPurchase")) || [];
 
 	const itemToAdd = {
 		id: idProduct,
@@ -86,29 +81,21 @@ function addCart(camera) {
 		quantity: 1,
 		price: camera.price
 	};
+	let itemExist = false;
 
-	if (listPurchase) {
-		//si LS existe
-		const tabResult = JSON.parse(listPurchase);
-		let itemExist = false;
+	listPurchase.forEach(item => {
+		// acces aux elements (boucle)
 
-		tabResult.forEach(item => {
-			// acces aux elements (boucle)
-
-			if (item.id === itemToAdd.id) {
-				// si le produit existe
-				item.quantity = parseInt(item.quantity) + 1; // incrémenter sa quantité
-				itemExist = true;
-			}
-		});
-
-		if (!itemExist) {
-			// si le produit n'existe pas
-			tabResult.push(itemToAdd);
+		if (item.id === itemToAdd.id) {
+			// si le produit existe
+			item.quantity++; // incrémenter sa quantité
+			itemExist = true;
 		}
-		localStorage.setItem("listPurchase", JSON.stringify(tabResult)); // mise a jour LS
-	} else {
-		// si LS n'existe pas
-		localStorage.setItem("listPurchase", JSON.stringify([itemToAdd]));
+	});
+
+	if (!itemExist) {
+		// si le produit n'existe pas
+		listPurchase.push(itemToAdd);
 	}
+	localStorage.setItem("listPurchase", JSON.stringify(listPurchase)); // mise a jour LS
 }
