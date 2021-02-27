@@ -155,13 +155,12 @@ const toApi = async function (data) {
 		let infos = await reponse.json();
 		window.location = "order.html?OrderId=" + infos.orderId;
 	} else {
-		alert("erreur: : " + reponse.status);
+		alert("erreur" + reponse.status);
 	}
 };
 
 /*ENVOI FORMULAIRE*/
 function sendOrder() {
-	//lier inputs html
 	let firstName = document.querySelector("#firstname");
 	let lastName = document.querySelector("#lastname");
 	let email = document.querySelector("#email");
@@ -169,7 +168,6 @@ function sendOrder() {
 	let zip = document.querySelector("#zip");
 	let city = document.querySelector("#city");
 
-	//lier message alert html
 	let alertFirstName = document.getElementById("alert-firstname");
 	let alertLastName = document.getElementById("alert-lastname");
 	let alertEmail = document.getElementById("alert-email");
@@ -189,44 +187,28 @@ function sendOrder() {
 
 	// mise en place des alertes dur le formulaire
 	if (fullNameValid.test(firstName.value) == false) {
-		alertFirstName.innerHTML = "Merci de renseigner un prénom valide".className =
-			"missingValue";
+		alertFirstName.innerHTML = "Merci de renseigner un prénom valide";
 		formValid = false;
-	} else {
-		alertFirstName.innerHTML = "";
 	}
 	if (fullNameValid.test(lastName.value) == false) {
-		alertLastName.innerHTML = "Merci de renseigner un Nom valide".className = "missingValue";
+		alertLastName.innerHTML = "Merci de renseigner un Nom valide";
 		formValid = false;
-	} else {
-		alertLastName.innerHTML = "";
 	}
 	if (emailValid.test(email.value) == false) {
-		alertEmail.innerHTML = "Merci de renseigner une adresse email valide".className =
-			"missingValue";
+		alertEmail.innerHTML = "Merci de renseigner une adresse email valide";
 		formValid = false;
-	} else {
-		alertEmail.innerHTML = "";
 	}
 	if (addressValid.test(address.value) == false) {
-		alertAddress.innerHTML = "Merci de renseigner une adresse valide".className =
-			"missingValue";
+		alertAddress.innerHTML = "Merci de renseigner une adresse valide";
 		formValid = false;
-	} else {
-		alertAddress.innerHTML = "";
 	}
 	if (zipValid.test(zip.value) == false) {
-		alertZip.innerHTML = "Merci de renseigner un code postal valide".className = "missingValue";
+		alertZip.innerHTML = "Merci de renseigner un code postal valide";
 		formValid = false;
-	} else {
-		alertZip.innerHTML = "";
 	}
 	if (cityValid.test(city.value) == false) {
-		alertCity.innerHTML = "Merci de renseigner un code postal valide".className =
-			"missingValue";
+		alertCity.innerHTML = "Merci de renseigner un code postal valide";
 		formValid = false;
-	} else {
-		alertCity.innerHTML = "";
 	}
 
 	//mise en forme pour envoi
@@ -260,5 +242,6 @@ function sendOrder() {
 }
 /*ENVOYER COMMANDE*/
 document.getElementById("submit-order").addEventListener("click", function (event) {
+	event.preventDefault();
 	sendOrder();
 });

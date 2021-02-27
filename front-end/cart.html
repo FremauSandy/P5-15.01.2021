@@ -34,33 +34,37 @@
         </div>
         <div class="form-container">
             <h3>Valider votre commande</h3>
-            <form action="chack-cart">
+            <form action="" method="POST">
                 <h4>Adresse</h4>
                 <div class="form-group">
-                    <label for="firstname"><i class="fas fa-user-alt"></i>Prénom</i></label>
+                    <label for="firstname"><i class="fas fa-user-alt"></i>Prénom</label>
+                    <span class="alert-infos" id="alert-firstname"></span>
                     <input type="text" id="firstname" placeholder="John">
-                    <span id="alert-firstname"></span>
+                    
 
-                    <label for="lastname"><i class="fas fa-user-alt"></i>Nom</i></label>
+                    <label for="lastname"><i class="fas fa-user-alt"></i>Nom</label>
+                    <span class="alert-infos" id="alert-lastname"></span>
                     <input type="text" id="lastname" placeholder="Doe">
-                    <span id="alert-lastname"></span>
+                    
                 
                     <label for="email"><i class="fa fa-envelope"></i>Email</label>
+                    <span class="alert-infos" id="alert-email"></span>
                     <input type="text" id="email" placeholder="john@example.com">
-                    <span id="alert-email"></span>
+                    
                 
                     <label for="adresse"><i class="fas fa-home"></i>Adresse</label>
+                    <span class="alert-infos" id="alert-adresse"></span>
                     <input type="text" id="adresse" placeholder="5 Rue des Champs Elysées">
-                    <span id="alert-adresse"></span>
+                    
 
                     <label for="zip"><i class="fas fa-search-location"></i>Code Postal</label>
+                    <span class="alert-infos" id="alert-zip"></span>
                     <input type="text" id="zip" placeholder="75000">
-                    <span id="alert-zip"></span>
-                
+                    
 
                     <label for="city"><i class="fa fa-city"></i>Ville</label>
+                    <span class="alert-infos" id="alert-city"></span>
                     <input type="text" id="city" placeholder="Paris">
-                    <span id="alert-city"></span>
 
                 </div>
                 
