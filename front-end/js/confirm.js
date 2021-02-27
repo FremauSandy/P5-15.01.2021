@@ -1,6 +1,6 @@
 function getId() {
 	const param = window.location.search;
-	const id = param.replace("?camera_id=", "");
+	const id = param.replace("?OrderId=", "");
 	return id;
 }
 function finalOrder() {
@@ -8,7 +8,7 @@ function finalOrder() {
 
 	let numberOrder = document.createElement("p");
 	numberOrder.classList.add("number-order");
-	numberOrder.textContent = "N° de votre commande :" + getId();
+	numberOrder.textContent = "N° de votre commande : " + getId();
 
 	mainContent.appendChild(numberOrder);
 

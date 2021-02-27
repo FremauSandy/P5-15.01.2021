@@ -51,6 +51,8 @@ function appearCart(item) {
 		removeItemFromCart(item.id);
 		saveCart();
 	};
+	//btnRemove.addEventListener("click", e =>{
+	// })
 
 	/*QUANTITE DU PRODUIT*/
 	const quantity = document.createElement("select");
@@ -217,15 +219,14 @@ function sendOrder() {
 		lastName: lastName.value,
 		email: email.value,
 		address: address.value,
-		zip: zip.value,
-		city: city.value
+		city: zip.value + " " + city.value
 	};
 
 	let camera_id = []; //tableau orders
 
 	let orderCart = JSON.parse(localStorage.getItem("listPurchase"));
 	for (let item of orderCart) {
-		camera_id.push(item._id);
+		camera_id.push(item.id);
 	}
 
 	//final order
@@ -235,13 +236,11 @@ function sendOrder() {
 	};
 
 	if (formValid) {
-		toApi(JSON.stringify(order)).then(data => {
-			console.log(data);
-		});
+		toApi(JSON.stringify(order));
 	}
 }
 /*ENVOYER COMMANDE*/
-document.getElementById("submit-order").addEventListener("click", function (event) {
+document.getElementById("form-cart").addEventListener("submit", function (event) {
 	event.preventDefault();
 	sendOrder();
 });
