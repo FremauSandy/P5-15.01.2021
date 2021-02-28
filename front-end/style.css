@@ -223,9 +223,9 @@ span {
 }
 @media screen and (max-width: 800px) {
 	.price-cart {
-		font-display: flex;
-		justify-items: center;
-		width: 95%;
+		width: 90%;
+		height: auto;
+		padding-right: 0;
 		margin-top: 0;
 	}
 }

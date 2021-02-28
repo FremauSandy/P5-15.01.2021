@@ -44,15 +44,12 @@ function appearCart(item) {
 	let btnRemove = document.createElement("button");
 	btnRemove.classList.add("remove");
 	btnRemove.textContent = "Supprimer";
-	btnRemove.onclick = function (e) {
-		// addeventlistener !
+	btnRemove.addEventListener("click", e => {
 		let buttonClicked = e.target;
 		buttonClicked.parentElement.parentElement.parentElement.remove();
 		removeItemFromCart(item.id);
 		saveCart();
-	};
-	//btnRemove.addEventListener("click", e =>{
-	// })
+	});
 
 	/*QUANTITE DU PRODUIT*/
 	const quantity = document.createElement("select");
