@@ -120,9 +120,6 @@ function countProduct() {
 	let totalCount = 0;
 	for (let i in listPurchase) {
 		totalCount += listPurchase[i].count * listPurchase[i].price;
-
-		//total prix produit par sa quantité html
-		let priceProd = document.getElementsByClassName("select-price");
 	}
 	return totalCount;
 }
@@ -160,12 +157,12 @@ const toApi = async function (data) {
 
 /*ENVOI FORMULAIRE*/
 function sendOrder() {
-	let firstName = document.querySelector("#firstname");
-	let lastName = document.querySelector("#lastname");
-	let email = document.querySelector("#email");
-	let address = document.querySelector("#adresse");
-	let zip = document.querySelector("#zip");
-	let city = document.querySelector("#city");
+	let firstName = document.getElementById("firstname");
+	let lastName = document.getElementById("lastname");
+	let email = document.getElementById("email");
+	let address = document.getElementById("adresse");
+	let zip = document.getElementById("zip");
+	let city = document.getElementById("city");
 
 	let alertFirstName = document.getElementById("alert-firstname");
 	let alertLastName = document.getElementById("alert-lastname");

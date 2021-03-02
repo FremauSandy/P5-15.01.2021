@@ -12,7 +12,7 @@ fetch(apiUrl + idProduct, { method: "GET" })
 		appearCamera(camera);
 		appearOption(camera);
 
-		let cart = document.querySelector("#add-cart"); // autre nom + html
+		let cart = document.querySelector("#add-product");
 		cart.addEventListener("click", () => {
 			addProduct(camera);
 		});
@@ -44,7 +44,7 @@ function appearCamera(camera) {
 	description.classList.add("infos-article");
 
 	let addCartButton = document.createElement("button");
-	addCartButton.id = "add-cart";
+	addCartButton.id = "add-product";
 	addCartButton.textContent = "Ajouter";
 
 	article.appendChild(imgProduct); // <article>
@@ -71,7 +71,6 @@ function appearOption(camera) {
 
 /*INDIQUER L'AJOUT AU PANIER/LOCALSTORAGE*/
 function addProduct(camera) {
-	// rennomer product
 	let listPurchase = JSON.parse(localStorage.getItem("listPurchase")) || [];
 
 	const itemToAdd = {

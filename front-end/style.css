@@ -113,7 +113,7 @@ article {
 	width: 95%;
 	margin: 10px 0 5px 0;
 }
-#add-cart {
+#add-product {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -124,7 +124,7 @@ article {
 	font-weight: bold;
 	color: black;
 }
-#add-cart:hover {
+#add-product:hover {
 	background-color: black;
 	color: white;
 }
