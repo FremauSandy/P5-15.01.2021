@@ -3,9 +3,7 @@ const listPurchase = JSON.parse(localStorage.getItem("listPurchase"));
 
 if (!localStorage.getItem("listPurchase")) {
 	alert("Votre panier est vide!");
-}
-
-if (listPurchase) {
+} else {
 	listPurchase.forEach(item => {
 		appearCart(item);
 		totalCart();
@@ -85,17 +83,15 @@ function appearCart(item) {
 }
 
 /*ACTION SUPPRESSION FULLCART*/
-let fullDeleteButton = document
-	.getElementById("full-delete")
-	.addEventListener("click", function () {
-		if (confirm("Etes-vous sûr de vouloir vider votre panier?")) {
-			localStorage.clear();
-			location.reload();
-			totalCart();
-		} else {
-			alert("Votre panier est déjà vide!");
-		}
-	});
+document.getElementById("full-delete").addEventListener("click", function () {
+	if (confirm("Etes-vous sûr de vouloir vider votre panier?")) {
+		localStorage.clear();
+		location.reload();
+		totalCart();
+	} else {
+		alert("Votre panier est déjà vide!");
+	}
+});
 
 /*SUPPRIMER UN PRODUIT*/
 function removeItemFromCart(id) {
@@ -220,7 +216,9 @@ function sendOrder() {
 
 	let orderCart = JSON.parse(localStorage.getItem("listPurchase"));
 	for (let item of orderCart) {
-		camera_id.push(item.id);
+		for (let i = 0; i < item.quantity; i++) {
+			camera_id.push(item.id);
+		}
 	}
 
 	//final order
